@@ -202,6 +202,63 @@
             });
         });
     </script>
+
+<script>
+document.querySelector("form[name='whitlist']").addEventListener("submit", function(e) {
+    e.preventDefault(); // Stop normal form submission
+
+    const webhookURL = "https://discord.com/api/webhooks/1446827390096510998/-nL68u7ApbfTGfZGCJM8i-yCGGdrSSTgDBX1DBjPucJfU-w4JwA1vchV_vW6y1ftEAgq";
+
+    // Collect form values
+    const formData = new FormData(this);
+    const username = formData.get("username");
+    const email = formData.get("email");
+    const discord = formData.get("discordusername");
+    const version = formData.get("minecraftversion");
+    const playstyle = formData.get("Playstyle");
+    const device = formData.get("device");
+    const yt = formData.get("ytchannellink");
+    const game = formData.get("game He Play");
+
+    // Create Discord message
+    const message = {
+        content: null,
+        embeds: [{
+            title: "📌 New Whitelist Application",
+            color: 0x00ff0a,
+            fields: [
+                { name: "Minecraft Username", value: username },
+                { name: "Email", value: email || "Not provided" },
+                { name: "Discord Username", value: discord },
+                { name: "Minecraft Version", value: version },
+                { name: "Playstyle", value: playstyle },
+                { name: "Device", value: device },
+                { name: "YouTube Channel", value: yt || "Not Provided" },
+                { name: "Game Selected", value: game }
+            ],
+            footer: { text: "Godlx SMP Whitelist System" }
+        }]
+    };
+
+    // Send data to Discord
+    fetch(webhookURL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(message)
+    })
+    .then(res => {
+        alert("✔ Whitelist form submitted successfully!");
+        this.reset();
+    })
+    .catch(err => {
+        alert("❌ Error sending to Discord. Check console.");
+        console.error(err);
+    });
+});
+</script>
+
+    
 </body>
 
 </html>
+
